@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.venv/
+output.csv
+sample_3_pngs/
+sample_3_table_pages/

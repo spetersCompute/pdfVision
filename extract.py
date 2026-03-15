@@ -51,8 +51,11 @@ Your response must start with { and end with } - no backticks, no commentary."""
 
 client = OpenAI(base_url="http://localhost:8080/v1", api_key="not-needed")
 
+# TRIAGE LOOP
 pages = []
 for png_path in sorted(png_dir.glob("*.png")):
+    published_page_number = int(png_path.stem) - 2
+    file_path_page_number = int(png_path.stem)
     messages = [
         {
             "role": "user",
@@ -76,7 +79,8 @@ for png_path in sorted(png_dir.glob("*.png")):
     result = json.loads(response_text)
 
     page_data = {
-        "page_num": (int(png_path.stem) - 2),
+        "published_page_num": published_page_number,
+        "file_path_page_num": file_path_page_number,
         "path": str(png_path),
         "relevant": result.get("relevant"),  # filled in during triage
         "reason": result.get("reason"),
@@ -85,3 +89,11 @@ for png_path in sorted(png_dir.glob("*.png")):
     }
     pages.append(page_data)
     print(response_text)
+
+# EXTRACTION LOOP
+relevant_pages = [page for page in pages if page["relevant"]]
+for page in relevant_pages:
+    published_page_number = page["published_page_num"]
+    file_page_number = page["file_path_page_num"]
+    fields_on_page = page["fields_found"]
+    img_path = page["path"]

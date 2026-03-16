@@ -33,7 +33,8 @@ def encode_image(path):
 
 triage_prompt = """***CRITICAL: RESPOND ONLY IN ENGLISH WITH VALID JSON***
 Look at this ESG report page image. Does it contain any of these:
-- Revenue figures (any currency, any year)
+- Revenue figures (any currency, any year).
+  The term "turnover" can be used as a synonym for revenue, so evaluate accordingly.
 - CO2 emissions (any scope, any year, in tCO2e or other units)
 - Scope 1, Scope 2, or Scope 3 data
 - Carbon intensity or other climate metrics
@@ -44,7 +45,7 @@ Return ONLY this exact JSON structure with no other text, no markdown, no code f
     "relevant": true,
     "reason": "Brief one-sentence explanation of why relevant or not",
     "summary": "One sentence describing what's actually on this page",
-    "fields_found": ["revenue", "CO2", "Scope 1"]  # empty list if none found
+    "fields_found": ["revenue", "CO2 emissions", "Scope 1", "Scope 2", "Scope 3", "carbon intensity"]  # empty list if none found
 }
 
 Your response must start with { and end with } - no backticks, no commentary."""
@@ -97,3 +98,5 @@ for page in relevant_pages:
     file_page_number = page["file_path_page_num"]
     fields_on_page = page["fields_found"]
     img_path = page["path"]
+
+    extraction_prompt = """"""

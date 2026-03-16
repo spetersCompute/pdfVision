@@ -99,4 +99,25 @@ for page in relevant_pages:
     fields_on_page = page["fields_found"]
     img_path = page["path"]
 
-    extraction_prompt = """"""
+    extraction_prompt = """
+    This is page {published_page_number} of an ESG report. Triage indicates this page contains: {fields_found} data.
+
+    You must return a JSON:
+    {{
+        "page": {published_page_number},
+        "extracted_fields": []
+    }}
+
+    The extracted_fields key above should be populated with the following:
+
+    - field_type: one of ["revenue", "CO2 emissions", "Scope 1", "Scope 2", "Scope 3", "carbon intensity"]
+    - year: the year this data corresponds to (YYYY)
+    - value: the numeric value (as number, not string)
+    - unit: the unit (e.g., "tCO2e", "million RMB", "tons")
+    - snippet: the exact text containing this value. If from a table, include the table name/description.
+    - location: where on the page (e.g., "Table 3, row 4", "Paragraph under 'Emissions'")
+    - confidence: 0.0-1.0 score
+    - reasoning: brief explanation of why you chose this value
+
+    If a field appears multiple times (e.g., same Scope 1 for different years), include each separately.
+    """

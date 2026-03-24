@@ -1,6 +1,35 @@
+# PDFs
+*.pdf
+
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
+*.pyo
+
+# Virtual environments
 .venv/
+venv/
+env/
+
+# Generated outputs
+*.png
+*.jpg
+*.jpeg
 output.csv
-sample_3_pngs/
-sample_3_table_pages/
+output.json
+*.log
+
+# Generated render directories
+*_pngs/
+*_pngs_*dpi/
+*_extract_pngs_*/
+*_triage_pngs_*/
+*_table_pages/
+
+# Temp/editor junk
+*~
+.~lock.*
+.DS_Store
+
+# Duplicate scratch scripts
+*copy.py
